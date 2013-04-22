@@ -1,0 +1,40 @@
+!!!
+%html
+  %head
+    %meta{:charset => "utf-8"}
+    %meta{:name => "viewport", :content => "width=device-width, initial-scale=1, maximum-scale=1"}
+    %title
+      -#= content_for?(:title) ? yield(:title) : "Myapp"
+      Project JetMart
+      =request.subdomain if request.subdomain.present? && request.subdomain != "www"
+    %meta{:content => "", :name => "description"}
+    %meta{:content => "", :name => "author"}
+    /[if lt IE 9]
+      %script(src="http://html5shim.googlecode.com/svn/trunk/html5.js" type="text/javascript")
+    = stylesheet_link_tag    "application", :media => "all", "data-turbolinks-track" => true
+    = javascript_include_tag "application", "data-turbolinks-track" => true
+    -#= yield :custom_js
+    = csrf_meta_tags
+    %meta{:content => "width=device-width, initial-scale=1.0", :name => "viewport"}
+    = yield(:head)
+  %body
+    %header.navbar.navbar-fixed-top.navbar-inverse
+      %nav.navbar-inner
+        .container
+          %button.btn.btn-navbar{"data-toggle" => "collapse", "data-target" => ".nav-collapse", :type => "button"}
+            %span.icon-bar
+            %span.icon-bar
+            %span.icon-bar
+          .nav-collapse.collapse
+            = render 'layouts/nav'
+    #main{:role => "main"}
+      .container
+        .content
+          .row
+            .span12
+              = render 'layouts/msg'
+              -# Vista per Angular
+              %div(ng-view)
+              = yield
+          %footer
+
